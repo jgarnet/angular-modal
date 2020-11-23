@@ -64,10 +64,12 @@ describe('ModalInstanceComponent', () => {
     });
     expect(component.close).toHaveBeenCalled();
   });
-  it('should allow the Modal to be closed according to ModalOptions', () => {
+  fit('should allow the Modal to be closed according to ModalOptions', () => {
     component.options.canClose = false;
+    fixture.detectChanges();
     expect(component.canClose()).toBeFalse();
     component.options.canClose = true;
+    fixture.detectChanges();
     expect(component.canClose()).toBeTrue();
   });
 });
