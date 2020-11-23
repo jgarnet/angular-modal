@@ -1,5 +1,5 @@
 import {Component, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
-import {ModalInstanceComponent} from './modal-instance/modal-instance.component';
+import {ModalComponent} from './modal/modal.component';
 import {ModalOptions} from './modal-options';
 import {ComponentResolverService} from './component-resolver.service';
 
@@ -8,7 +8,7 @@ import {ComponentResolverService} from './component-resolver.service';
 })
 export class ModalService {
 
-  private activeComponents: {ref: ComponentRef<ModalInstanceComponent>, component: Component}[];
+  private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
 
   constructor(private componentResolverService: ComponentResolverService,
               private viewContainerRef: ViewContainerRef) {
@@ -27,7 +27,7 @@ export class ModalService {
     canClose: true
   }): void {
     if (!this.isActive(component)) {
-      const ref = this.componentResolverService.resolveComponent(this.viewContainerRef, ModalInstanceComponent, {
+      const ref = this.componentResolverService.resolveComponent(this.viewContainerRef, ModalComponent, {
         component,
         options
       });

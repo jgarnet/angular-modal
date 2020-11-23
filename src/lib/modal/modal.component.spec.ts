@@ -1,18 +1,18 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ModalInstanceComponent} from './modal-instance.component';
+import {ModalComponent} from './modal.component';
 import {MockComponentRef} from '../mock/mock-component-ref';
 import {ComponentResolverService} from '../component-resolver.service';
 import {MockComponentResolver} from '../mock/mock-component-resolver';
 
 describe('ModalInstanceComponent', () => {
-  let component: ModalInstanceComponent;
-  let fixture: ComponentFixture<ModalInstanceComponent>;
+  let component: ModalComponent;
+  let fixture: ComponentFixture<ModalComponent>;
   const mockComponentResolver: MockComponentResolver = new MockComponentResolver(null, null);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ModalInstanceComponent ],
+      declarations: [ ModalComponent ],
       providers: [
         { provide: ComponentResolverService, useValue: mockComponentResolver }
       ]
@@ -21,7 +21,7 @@ describe('ModalInstanceComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalInstanceComponent);
+    fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
     component.options = {
       data: {}

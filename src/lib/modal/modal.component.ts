@@ -4,10 +4,10 @@ import {ComponentResolverService} from '../component-resolver.service';
 
 @Component({
   selector: 'ngm-modal-instance',
-  templateUrl: './modal-instance.component.html',
-  styleUrls: ['./modal-instance.component.css']
+  templateUrl: './modal.component.html',
+  styleUrls: ['./modal.component.css']
 })
-export class ModalInstanceComponent implements OnInit {
+export class ModalComponent implements OnInit {
   @Input() component: Component;
   @Input() options: ModalOptions;
   @Input() ref: ComponentRef<Component>;
