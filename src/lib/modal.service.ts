@@ -79,8 +79,8 @@ export class ModalService {
    */
 
   private lockBody(): void {
-    this.renderer.setAttribute(this.document.body, 'overflow-x', 'none');
-    this.renderer.setAttribute(this.document.body, 'overflow-y', 'none');
+    this.renderer.setAttribute(this.document.body, 'overflow-x', 'hidden');
+    this.renderer.setAttribute(this.document.body, 'overflow-y', 'hidden');
   }
 
   /**
