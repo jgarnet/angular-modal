@@ -64,7 +64,7 @@ describe('ModalInstanceComponent', () => {
     });
     expect(component.close).toHaveBeenCalled();
   });
-  fit('should allow the Modal to be closed according to ModalOptions', () => {
+  it('should allow the Modal to be closed according to ModalOptions', () => {
     component.options.canClose = false;
     fixture.detectChanges();
     expect(component.canClose()).toBeFalse();

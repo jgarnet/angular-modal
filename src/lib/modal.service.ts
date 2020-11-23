@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, ComponentRef, Injectable} from '@angular/core';
+import {ApplicationRef, Component, ComponentRef, Injectable, Renderer2} from '@angular/core';
 import {ModalComponent} from './modal/modal.component';
 import {ModalOptions} from './modal-options';
 import {ComponentResolverService} from './component-resolver.service';
@@ -11,6 +11,7 @@ export class ModalService {
   private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
 
   constructor(private componentResolverService: ComponentResolverService,
+              private renderer: Renderer2,
               private applicationRef: ApplicationRef) {
     this.activeComponents = [];
   }
@@ -27,6 +28,7 @@ export class ModalService {
     canClose: true
   }): void {
     if (!this.isActive(component)) {
+      this.lockBody();
       const ref = this.componentResolverService.resolveComponent(this.applicationRef, ModalComponent, {
         component,
         options
@@ -45,6 +47,9 @@ export class ModalService {
     const index = this.activeComponents.findIndex(i => i.component === component);
     this.activeComponents[index].ref.destroy();
     this.activeComponents.splice(index, 1);
+    if (this.activeComponents.length === 0) {
+      this.unlockBody();
+    }
   }
 
   /**
@@ -54,10 +59,33 @@ export class ModalService {
   closeAll(): void {
     this.activeComponents.forEach(i => i.ref.destroy());
     this.activeComponents = [];
+    this.unlockBody();
   }
+
+  /**
+   * Determines if the given Component is currently being displayed
+   */
 
   isActive(component: any): boolean {
     return this.activeComponents.findIndex(i => i.component === component) !== -1;
+  }
+
+  /**
+   * Locks to body to prevent scrolling while instances of Modal are present
+   */
+
+  private lockBody(): void {
+    this.renderer.setAttribute(document.body, 'overflow-x', 'none');
+    this.renderer.setAttribute(document.body, 'overflow-y', 'none');
+  }
+
+  /**
+   * Unlocks the body once all Modal instances are destroyed
+   */
+
+  private unlockBody(): void {
+    this.renderer.setAttribute(document.body, 'overflow-x', 'auto');
+    this.renderer.setAttribute(document.body, 'overflow-y', 'auto');
   }
 
 }
