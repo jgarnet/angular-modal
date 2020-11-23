@@ -1,11 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ModalService } from './modal.service';
+import {ModalService} from './modal.service';
 import {ComponentResolver} from './component-resolver';
 import {MockComponentResolver} from './mock/mock-component-resolver';
 import {ComponentResolverService} from './component-resolver.service';
 import {MockComponentRef} from './mock/mock-component-ref';
-import {ViewContainerRef} from '@angular/core';
 
 describe('AngularModalService', () => {
   let service: ModalService;
@@ -14,7 +13,6 @@ describe('AngularModalService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ViewContainerRef,
         { provide: ComponentResolverService, useValue: componentResolver }
       ]
     });

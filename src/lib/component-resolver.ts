@@ -2,7 +2,7 @@
  * This class provides a mechanism for utilizing the ComponentFactoryResolver to resolve Components
  */
 
-import { ComponentFactoryResolver, Injector, ViewContainerRef, ComponentRef } from '@angular/core';
+import {ComponentFactoryResolver, Injector, ViewContainerRef, ComponentRef, ApplicationRef} from '@angular/core';
 
 export class ComponentResolver {
 
@@ -15,10 +15,14 @@ export class ComponentResolver {
    * @param inputData The @Input() fields to be populated in the Component
    */
 
-  resolveComponent(view: ViewContainerRef, component: any, inputData: any): ComponentRef<any> {
+  resolveComponent(view: ViewContainerRef | ApplicationRef, component: any, inputData: any): ComponentRef<any> {
     const factory = this.resolver.resolveComponentFactory(component);
     const componentRef = factory.create(this.injector);
-    view.insert(componentRef.hostView);
+    if (view instanceof ApplicationRef) {
+      view.attachView(componentRef.hostView);
+    } else {
+      view.insert(componentRef.hostView);
+    }
     // inject the Component with a reference to its ComponentRef
     // @ts-ignore
     componentRef.instance.ref = componentRef;
