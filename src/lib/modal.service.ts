@@ -79,8 +79,8 @@ export class ModalService {
    */
 
   private lockBody(): void {
-    this.renderer.setAttribute(this.document.body, 'overflow-x', 'hidden');
-    this.renderer.setAttribute(this.document.body, 'overflow-y', 'hidden');
+    this.renderer.setStyle(this.document.body, 'overflow-x', 'hidden');
+    this.renderer.setStyle(this.document.body, 'overflow-y', 'hidden');
   }
 
   /**
@@ -88,8 +88,8 @@ export class ModalService {
    */
 
   private unlockBody(): void {
-    this.renderer.setAttribute(this.document.body, 'overflow-x', 'auto');
-    this.renderer.setAttribute(this.document.body, 'overflow-y', 'auto');
+    this.renderer.setStyle(this.document.body, 'overflow-x', 'auto');
+    this.renderer.setStyle(this.document.body, 'overflow-y', 'auto');
   }
 
 }
