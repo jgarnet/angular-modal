@@ -1,11 +1,31 @@
 {
-  "name": "angular-modal",
-  "version": "0.0.1",
+  "name": "angular-modal-simple",
+  "version": "0.0.2",
   "peerDependencies": {
     "@angular/common": "^10.1.6",
     "@angular/core": "^10.1.6"
   },
   "dependencies": {
     "tslib": "^2.0.0"
-  }
+  },
+  "description": "Provides a simple, minimal configuration modal implementation.",
+  "main": "karma.conf.js",
+  "scripts": {
+    "test": "ng test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgarnet/angular-modal.git"
+  },
+  "keywords": [
+    "simple",
+    "angular",
+    "modal"
+  ],
+  "author": "jgarnett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jgarnet/angular-modal/issues"
+  },
+  "homepage": "https://github.com/jgarnet/angular-modal#readme"
 }
