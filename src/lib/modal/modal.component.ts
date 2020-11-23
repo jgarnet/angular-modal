@@ -33,4 +33,9 @@ export class ModalComponent implements OnInit {
   close(): void {
     this.ref.destroy();
   }
+
+  canClose(): boolean {
+    return this.options.canClose === true;
+  }
+
 }
