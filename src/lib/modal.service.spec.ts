@@ -5,8 +5,8 @@ import {ComponentResolver} from './component-resolver';
 import {MockComponentResolver} from './mock/mock-component-resolver';
 import {ComponentResolverService} from './component-resolver.service';
 import {MockComponentRef} from './mock/mock-component-ref';
-import {Renderer2} from '@angular/core';
-import {MockRenderer2} from './mock/mock-renderer2';
+import {RendererFactory2} from '@angular/core';
+import {MockRendererFactory2} from './mock/mock-renderer-factory2';
 
 describe('AngularModalService', () => {
   let service: ModalService;
@@ -15,7 +15,7 @@ describe('AngularModalService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Renderer2, useClass: MockRenderer2 },
+        { provide: RendererFactory2, useClass: MockRendererFactory2 },
         { provide: ComponentResolverService, useValue: componentResolver }
       ]
     });

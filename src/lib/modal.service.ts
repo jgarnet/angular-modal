@@ -1,7 +1,8 @@
-import {ApplicationRef, Component, ComponentRef, Injectable, Renderer2} from '@angular/core';
+import {ApplicationRef, Component, ComponentRef, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {ModalComponent} from './modal/modal.component';
 import {ModalOptions} from './modal-options';
 import {ComponentResolverService} from './component-resolver.service';
+import {DOCUMENT} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,14 @@ import {ComponentResolverService} from './component-resolver.service';
 export class ModalService {
 
   private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
+  private renderer: Renderer2;
 
   constructor(private componentResolverService: ComponentResolverService,
-              private renderer: Renderer2,
+              rendererFactory: RendererFactory2,
+              @Inject(DOCUMENT) private document,
               private applicationRef: ApplicationRef) {
     this.activeComponents = [];
+    this.renderer = rendererFactory.createRenderer(null, null);
   }
 
   /**
@@ -75,8 +79,8 @@ export class ModalService {
    */
 
   private lockBody(): void {
-    this.renderer.setAttribute(document.body, 'overflow-x', 'none');
-    this.renderer.setAttribute(document.body, 'overflow-y', 'none');
+    this.renderer.setAttribute(this.document.body, 'overflow-x', 'none');
+    this.renderer.setAttribute(this.document.body, 'overflow-y', 'none');
   }
 
   /**
@@ -84,8 +88,8 @@ export class ModalService {
    */
 
   private unlockBody(): void {
-    this.renderer.setAttribute(document.body, 'overflow-x', 'auto');
-    this.renderer.setAttribute(document.body, 'overflow-y', 'auto');
+    this.renderer.setAttribute(this.document.body, 'overflow-x', 'auto');
+    this.renderer.setAttribute(this.document.body, 'overflow-y', 'auto');
   }
 
 }
