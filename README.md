@@ -5,7 +5,7 @@ Provides a simple, minimal configuration modal implementation.
 ## Installation
 
 ```bash
-npm install angular-modal
+npm install angular-modal-simple
 ```
 
 ## Use
