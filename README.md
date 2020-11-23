@@ -22,14 +22,6 @@ Import `AngularModalModule` into your application:
 })
 ```
 
-Add `ModalComponent` to your application:
-
-```angular2html
-<router-outlet></router-outlet>
-...
-<ngm-modal></ngm-modal>
-```
-
 Import `ModalService` to display ModalComponents.
 
 ```

@@ -8,20 +8,11 @@ import {ComponentResolverService} from './component-resolver.service';
 })
 export class ModalService {
 
-  private viewContainerRef: ViewContainerRef;
   private activeComponents: {ref: ComponentRef<ModalInstanceComponent>, component: Component}[];
 
-  constructor(private componentResolverService: ComponentResolverService) {
+  constructor(private componentResolverService: ComponentResolverService,
+              private viewContainerRef: ViewContainerRef) {
     this.activeComponents = [];
-  }
-
-  /**
-   * Set the ViewContainerRef in which ModalInstanceComponent instances will be inserted
-   * @param viewContainerRef The modal wrapper ViewContainerRef
-   */
-
-  setViewContainerRef(viewContainerRef: ViewContainerRef): void {
-    this.viewContainerRef = viewContainerRef;
   }
 
   /**
