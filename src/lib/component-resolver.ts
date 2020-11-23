@@ -2,7 +2,7 @@
  * This class provides a mechanism for utilizing the ComponentFactoryResolver to resolve Components
  */
 
-import {ComponentFactoryResolver, Injector, ViewContainerRef, ComponentRef, ApplicationRef} from '@angular/core';
+import {ComponentFactoryResolver, Injector, ViewContainerRef, ComponentRef, ApplicationRef, EmbeddedViewRef} from '@angular/core';
 
 export class ComponentResolver {
 
@@ -20,6 +20,9 @@ export class ComponentResolver {
     const componentRef = factory.create(this.injector);
     if (view instanceof ApplicationRef) {
       view.attachView(componentRef.hostView);
+      const domElem = (componentRef.hostView as EmbeddedViewRef<any>)
+        .rootNodes[0] as HTMLElement;
+      document.body.appendChild(domElem);
     } else {
       view.insert(componentRef.hostView);
     }
