@@ -69,7 +69,10 @@ public class TestService {
                 inputA: 'test',
                 inputB: 3
             },
-            dismissableMask: false
+            dismissableMask: false,
+            styles: {
+                backgroundColor: '#eee'
+            }
         });
     }
 }

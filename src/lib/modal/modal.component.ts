@@ -11,17 +11,17 @@ export class ModalComponent implements OnInit {
   @Input() component: Component;
   @Input() options: ModalOptions;
   @Input() ref: ComponentRef<Component>;
+  @Input() customStyles: {};
   @ViewChild('content', {
     static: true,
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
-  customStyles: {};
 
   constructor(private componentResolverService: ComponentResolverService) { }
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
-    this.customStyles = this.getDefaultOption('styleClass', {});
+    this.customStyles = this.getDefaultOption('styles', {});
   }
 
   processClick(event): void {
