@@ -30,7 +30,7 @@ export class ModalService {
     data: {},
     dismissibleMask: true,
     canClose: true,
-    styleClass: ''
+    styles: {}
   }): void {
     if (!this.isActive(component)) {
       this.lockBody();

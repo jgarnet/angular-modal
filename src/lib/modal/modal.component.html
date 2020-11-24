@@ -1,5 +1,5 @@
 <div class="ngm-modal-container fade-animation" (click)="processClick($event)">
-  <div class="ngm-modal {{customClass}}">
+  <div class="ngm-modal" [ngStyle]="customStyles">
     <div class="ngm-modal-close" *ngIf="canClose()">
       <span class="modal-close-button" (click)="close()">&#10005;</span>
     </div>

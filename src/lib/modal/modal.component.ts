@@ -5,8 +5,7 @@ import {ComponentResolverService} from '../component-resolver.service';
 @Component({
   selector: 'ngm-modal-instance',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
   @Input() component: Component;
@@ -16,13 +15,13 @@ export class ModalComponent implements OnInit {
     static: true,
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
-  customClass: string;
+  customStyles: {};
 
   constructor(private componentResolverService: ComponentResolverService) { }
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
-    this.customClass = this.getDefaultOption('styleClass', '');
+    this.customStyles = this.getDefaultOption('styleClass', {});
   }
 
   processClick(event): void {

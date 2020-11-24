@@ -41,10 +41,23 @@ public class TestService {
 Property | Type | Description
 ---------|------|------------
 canClose | boolean | Determines whether the user can close the Modal
-data | any | Any inputted data to be passed to the Component reference
+data | any | Data which will populate the Component's @Input() fields
 dismissableMask | boolean | Determines whether clicking the Modal container mask will close the Modal
+styles | {} | Allows custom styling to be assigned to the Modal instance
 
 Example:
+
+`TestComponent`:
+
+```
+@Component()
+public class TestComponent {
+    @Input() inputA: string;
+    @Input() inputB: number;
+}
+```
+
+`TestService`:
 
 ```
 @Injectable()
