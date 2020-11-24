@@ -38,7 +38,10 @@ export class ModalService {
         options
       });
       this.activeComponents.push({ref, component});
-      ref.onDestroy(() => this.activeComponents.splice(this.activeComponents.indexOf(component as any), 1));
+      ref.onDestroy(() => {
+        this.activeComponents.splice(this.activeComponents.indexOf(component as any), 1);
+        this.unlockBodyIfNeeded();
+      });
     }
   }
 
@@ -51,9 +54,7 @@ export class ModalService {
     const index = this.activeComponents.findIndex(i => i.component === component);
     this.activeComponents[index].ref.destroy();
     this.activeComponents.splice(index, 1);
-    if (this.activeComponents.length === 0) {
-      this.unlockBody();
-    }
+    this.unlockBodyIfNeeded();
   }
 
   /**
@@ -79,7 +80,6 @@ export class ModalService {
    */
 
   private lockBody(): void {
-    this.renderer.setStyle(this.document.body, 'overflow-x', 'hidden');
     this.renderer.setStyle(this.document.body, 'overflow-y', 'hidden');
   }
 
@@ -88,8 +88,13 @@ export class ModalService {
    */
 
   private unlockBody(): void {
-    this.renderer.setStyle(this.document.body, 'overflow-x', 'auto');
     this.renderer.setStyle(this.document.body, 'overflow-y', 'auto');
+  }
+
+  private unlockBodyIfNeeded(): void {
+    if (this.activeComponents.length === 0) {
+      this.unlockBody();
+    }
   }
 
 }
