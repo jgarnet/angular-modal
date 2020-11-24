@@ -1,11 +1,12 @@
-import {Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {ModalOptions} from '../modal-options';
 import {ComponentResolverService} from '../component-resolver.service';
 
 @Component({
   selector: 'ngm-modal-instance',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  styleUrls: ['./modal.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalComponent implements OnInit {
   @Input() component: Component;
