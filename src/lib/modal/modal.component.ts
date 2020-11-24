@@ -21,12 +21,12 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
-    this.customClass = this.options.styleClass || '';
+    this.customClass = this.getDefaultOption('styleClass', '');
   }
 
   processClick(event): void {
     // only close the modal-container if we clicked outside the modal
-    if (event.target.getAttribute('id') !== 'modal-container' || this.options.dismissibleMask === false) {
+    if (event.target.getAttribute('id') !== 'modal-container' || this.getDefaultOption('dismissibleMask', true) === false) {
       return;
     }
     this.close();
@@ -37,7 +37,11 @@ export class ModalComponent implements OnInit {
   }
 
   canClose(): boolean {
-    return this.options.canClose === true;
+    return this.getDefaultOption('canClose', true) === true;
+  }
+
+  private getDefaultOption<T>(key: string, value: any): any {
+    return (this.options[key] !== null && this.options[key] !== undefined) ? this.options[key] : value;
   }
 
 }
