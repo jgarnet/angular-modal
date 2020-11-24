@@ -29,7 +29,8 @@ export class ModalService {
   display(component: any, options: ModalOptions = {
     data: {},
     dismissibleMask: true,
-    canClose: true
+    canClose: true,
+    styleClass: ''
   }): void {
     if (!this.isActive(component)) {
       this.lockBody();

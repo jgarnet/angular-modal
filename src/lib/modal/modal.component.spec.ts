@@ -41,12 +41,14 @@ describe('ModalInstanceComponent', () => {
     const componentRef = new MockComponentRef();
     spyOn(componentRef, 'destroy');
     component.ref = componentRef;
+    fixture.detectChanges();
     component.close();
     expect(componentRef.destroy).toHaveBeenCalled();
   });
   it('should not call close() in processClick() if dismissableMask is disabled', () => {
     spyOn(component, 'close');
     component.options.dismissibleMask = false;
+    fixture.detectChanges();
     component.processClick({
       target: {
         getAttribute: (attr) => 'modal-container'
@@ -57,6 +59,7 @@ describe('ModalInstanceComponent', () => {
   it('should call close() in processClick() if dismissableMask is enabled and the mask has been clicked', () => {
     spyOn(component, 'close');
     component.options.dismissibleMask = true;
+    fixture.detectChanges();
     component.processClick({
       target: {
         getAttribute: (attr) => 'modal-container'

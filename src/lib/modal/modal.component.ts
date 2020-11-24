@@ -21,7 +21,7 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
-    this.customClass = !!this.options.styleClass ? this.options.styleClass : '';
+    this.customClass = this.options.styleClass || '';
   }
 
   processClick(event): void {
