@@ -15,11 +15,13 @@ export class ModalComponent implements OnInit {
     static: true,
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
+  customClass: string;
 
   constructor(private componentResolverService: ComponentResolverService) { }
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
+    this.customClass = !!this.options.styleClass ? this.options.styleClass : '';
   }
 
   processClick(event): void {
