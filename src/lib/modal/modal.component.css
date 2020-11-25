@@ -40,6 +40,8 @@ div.ngm-modal {
   padding: 1em;
   display: flex;
   flex-direction: column;
+  animation: zoomIn .2s ease-in-out;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
   transition: max-width .2s linear;
   -webkit-transition: .2s linear;
   -moz-transition: .2s linear;
@@ -50,10 +52,15 @@ div.ngm-modal-content {
 }
 
 .fade-animation {
-  animation: fadeIn .5s ease-in-out;
+  animation: fadeIn .3s ease-in-out;
 }
 
 @keyframes fadeIn {
   from {opacity: 0}
   to {opacity: 1}
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.4); }
+  to { transform: scale(1); }
 }
