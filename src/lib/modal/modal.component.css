@@ -42,6 +42,9 @@ div.ngm-modal {
   flex-direction: column;
   animation: zoomIn .2s ease-in-out;
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
+  -o-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
   transition: max-width .2s linear;
   -webkit-transition: .2s linear;
   -moz-transition: .2s linear;
