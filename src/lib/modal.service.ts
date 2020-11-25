@@ -40,7 +40,7 @@ export class ModalService {
       });
       this.activeComponents.push({ref, component});
       ref.onDestroy(() => {
-        this.activeComponents.splice(this.activeComponents.indexOf(component as any), 1);
+        this.activeComponents.splice(this.activeComponents.indexOf(component), 1);
         this.unlockBodyIfNeeded();
       });
     }

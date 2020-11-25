@@ -9,6 +9,13 @@ describe('ModalInstanceComponent', () => {
   let component: ModalComponent;
   let fixture: ComponentFixture<ModalComponent>;
   const mockComponentResolver: MockComponentResolver = new MockComponentResolver(null, null);
+  const modalContainerClickEvent = {
+    target: {
+      classList: {
+        contains: (className) => true
+      }
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -49,22 +56,14 @@ describe('ModalInstanceComponent', () => {
     spyOn(component, 'close');
     component.options.dismissibleMask = false;
     fixture.detectChanges();
-    component.processClick({
-      target: {
-        getAttribute: (attr) => 'modal-container'
-      }
-    });
+    component.processClick(modalContainerClickEvent);
     expect(component.close).not.toHaveBeenCalled();
   });
   it('should call close() in processClick() if dismissableMask is enabled and the mask has been clicked', () => {
     spyOn(component, 'close');
     component.options.dismissibleMask = true;
     fixture.detectChanges();
-    component.processClick({
-      target: {
-        getAttribute: (attr) => 'modal-container'
-      }
-    });
+    component.processClick(modalContainerClickEvent);
     expect(component.close).toHaveBeenCalled();
   });
   it('should allow the Modal to be closed according to ModalOptions', () => {

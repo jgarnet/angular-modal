@@ -26,7 +26,10 @@ export class ModalComponent implements OnInit {
 
   processClick(event): void {
     // only close the modal-container if we clicked outside the modal
-    if (event.target.getAttribute('id') !== 'modal-container' || this.getDefaultOption('dismissibleMask', true) === false) {
+    if (!event.target.classList.contains('ngm-modal-container')) {
+      return;
+    }
+    if (this.getDefaultOption<boolean>('dismissibleMask', true) === false) {
       return;
     }
     this.close();
@@ -41,7 +44,7 @@ export class ModalComponent implements OnInit {
   }
 
   private getDefaultOption<T>(key: string, value: any): any {
-    return (this.options[key] !== null && this.options[key] !== undefined) ? this.options[key] : value;
+    return (this.options[key] !== null && this.options[key] !== undefined) ? this.options[key] as T : value;
   }
 
 }
