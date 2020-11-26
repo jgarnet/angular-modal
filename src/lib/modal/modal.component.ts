@@ -45,7 +45,7 @@ export class ModalComponent implements OnInit {
 
   close(): void {
     this.modal.nativeElement.classList.add('close-animation');
-    timer(300).subscribe(() => this.ref.destroy());
+    timer(200).subscribe(() => this.ref.destroy());
   }
 
   private getDefaultOption<T>(key: string, value: any): any {

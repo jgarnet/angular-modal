@@ -54,11 +54,13 @@ div.ngm-modal-content {
 }
 
 .fade-animation {
-  animation: fadeIn .3s ease-in-out;
+  animation: fadeIn .2s ease-in-out;
 }
 
 .close-animation {
-  animation: closeModal .3s ease-in-out !important;
+  animation: closeModal .2s ease-in-out !important;
+  opacity: 0;
+  transform: scale(0);
 }
 
 @keyframes fadeIn {
@@ -73,5 +75,5 @@ div.ngm-modal-content {
 
 @keyframes closeModal {
   from { transform: scale(1); opacity: 1 }
-  to { transform: scale(0.4); opacity: 0 }
+  to { transform: scale(0); opacity: 0 }
 }

@@ -51,7 +51,7 @@ describe('ModalInstanceComponent', () => {
     component.ref = componentRef;
     fixture.detectChanges();
     component.close();
-    tick(300);
+    tick(200);
     expect(componentRef.destroy).toHaveBeenCalled();
   }));
   it('should not call close() in processClick() if dismissableMask is disabled', () => {
