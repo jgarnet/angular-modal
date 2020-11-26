@@ -8,7 +8,7 @@ import {ModalService} from '../modal.service';
 })
 export class ModalContainerComponent implements OnInit {
 
-  @ViewChild('content', {
+  @ViewChild('view', {
     static: true,
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
