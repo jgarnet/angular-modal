@@ -1,6 +1,7 @@
-import {Component, ComponentRef, Input, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
+import {Component, ComponentRef, ElementRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ModalOptions} from '../modal-options';
 import {ComponentResolverService} from '../component-resolver.service';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'ngm-modal-instance',
@@ -11,36 +12,40 @@ export class ModalComponent implements OnInit {
   @Input() component: Component;
   @Input() options: ModalOptions;
   @Input() ref: ComponentRef<Component>;
-  @Input() customStyles: {};
   @ViewChild('content', {
     static: true,
     read: ViewContainerRef
   }) viewContainerRef: ViewContainerRef;
+  @ViewChild('modal') modal: ElementRef;
+  customStyles: {};
+  zIndex: number;
+  dismissibleMask: boolean;
+  canClose: boolean;
 
   constructor(private componentResolverService: ComponentResolverService) { }
 
   ngOnInit(): void {
     this.componentResolverService.resolveComponent(this.viewContainerRef, this.component, this.options.data);
-    this.customStyles = this.getDefaultOption('styles', {});
+    this.populateOptions();
   }
 
-  processClick(event): void {
-    // only close the modal-container if we clicked outside the modal
-    if (!event.target.classList.contains('ngm-modal-container')) {
-      return;
-    }
-    if (this.getDefaultOption<boolean>('dismissibleMask', true) === false) {
+  populateOptions(): void {
+    this.customStyles = this.getDefaultOption('styles', {});
+    this.zIndex = this.getDefaultOption('zIndex', 999);
+    this.dismissibleMask = this.getDefaultOption('dismissibleMask', true);
+    this.canClose = this.getDefaultOption('canClose', true);
+  }
+
+  dismissMask(event): void {
+    if (!event.target.classList.contains('ngm-modal-container') || this.dismissibleMask === false) {
       return;
     }
     this.close();
   }
 
   close(): void {
-    this.ref.destroy();
-  }
-
-  canClose(): boolean {
-    return this.getDefaultOption('canClose', true) === true;
+    this.modal.nativeElement.classList.add('close-animation');
+    timer(300).subscribe(() => this.ref.destroy());
   }
 
   private getDefaultOption<T>(key: string, value: any): any {

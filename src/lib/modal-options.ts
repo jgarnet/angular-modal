@@ -3,4 +3,5 @@ export interface ModalOptions {
   dismissibleMask?: boolean;
   canClose?: boolean;
   styles?: {};
+  zIndex?: number;
 }
