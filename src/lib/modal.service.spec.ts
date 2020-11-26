@@ -5,10 +5,12 @@ import {ComponentResolver} from './component-resolver';
 import {MockComponentResolver} from './mock/mock-component-resolver';
 import {ComponentResolverService} from './component-resolver.service';
 import {MockComponentRef} from './mock/mock-component-ref';
-import {RendererFactory2} from '@angular/core';
+import {ApplicationRef, RendererFactory2} from '@angular/core';
 import {MockRendererFactory2} from './mock/mock-renderer-factory2';
 import {MockRenderer2} from './mock/mock-renderer2';
 import {DOCUMENT} from '@angular/common';
+import {ModalComponent} from './modal/modal.component';
+import {MockViewContainerRef} from './mock/mock-view-container-ref';
 
 describe('AngularModalService', () => {
   let service: ModalService;
@@ -27,7 +29,8 @@ describe('AngularModalService', () => {
       providers: [
         { provide: RendererFactory2, useClass: MockRendererFactory2 },
         { provide: ComponentResolverService, useValue: mockComponentResolver },
-        { provide: DOCUMENT, useValue: mockDocument }
+        { provide: DOCUMENT, useValue: mockDocument },
+        { provide: ApplicationRef, useValue: {} }
       ]
     });
     service = TestBed.inject(ModalService);
@@ -94,5 +97,27 @@ describe('AngularModalService', () => {
     expect(MockRenderer2.prototype.setStyle).not.toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
     service.close('2');
     expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
+  });
+  it('should use ApplicationRef when ViewContainerRef is missing', () => {
+    const applicationRef = TestBed.inject(ApplicationRef);
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
+    spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
+    service.setViewContainerRef(null);
+    service.display(ModalComponent);
+    expect(mockComponentResolver.resolveComponent).toHaveBeenCalledWith(applicationRef, ModalComponent, {
+      component: ModalComponent,
+      options: {}
+    });
+  });
+  it('should use ViewContainerRef when ApplicationRef is missing', () => {
+    const mockViewContainerRef = new MockViewContainerRef();
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
+    spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
+    service.setViewContainerRef(mockViewContainerRef);
+    service.display(ModalComponent);
+    expect(mockComponentResolver.resolveComponent).toHaveBeenCalledWith(mockViewContainerRef, ModalComponent, {
+      component: ModalComponent,
+      options: {}
+    });
   });
 });

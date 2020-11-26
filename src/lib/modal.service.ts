@@ -1,4 +1,4 @@
-import {ApplicationRef, Component, ComponentRef, Inject, Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {ApplicationRef, Component, ComponentRef, Inject, Injectable, Renderer2, RendererFactory2, ViewContainerRef} from '@angular/core';
 import {ModalComponent} from './modal/modal.component';
 import {ModalOptions} from './modal-options';
 import {ComponentResolverService} from './component-resolver.service';
@@ -11,6 +11,7 @@ export class ModalService {
 
   private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
   private renderer: Renderer2;
+  private viewContainerRef: ViewContainerRef;
 
   constructor(private componentResolverService: ComponentResolverService,
               rendererFactory: RendererFactory2,
@@ -18,6 +19,14 @@ export class ModalService {
               private applicationRef: ApplicationRef) {
     this.activeComponents = [];
     this.renderer = rendererFactory.createRenderer(null, null);
+  }
+
+  /**
+   * Allows a custom ViewContainerRef to be used to inject Modals into
+   */
+
+  setViewContainerRef(viewContainerRef: ViewContainerRef): void {
+    this.viewContainerRef = viewContainerRef;
   }
 
   /**
@@ -29,7 +38,7 @@ export class ModalService {
   display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
       this.lockBody();
-      const ref = this.componentResolverService.resolveComponent(this.applicationRef, ModalComponent, {
+      const ref = this.componentResolverService.resolveComponent(this.getHostView(), ModalComponent, {
         component,
         options
       });
@@ -39,6 +48,10 @@ export class ModalService {
         this.unlockBodyIfNeeded();
       });
     }
+  }
+
+  private getHostView(): ViewContainerRef | ApplicationRef {
+    return this.viewContainerRef || this.applicationRef;
   }
 
   /**

@@ -22,6 +22,14 @@ Import `AngularModalModule` into your application:
 })
 ```
 
+Add `ModalContainerComponent` to your application:
+
+```
+<router-outlet></router-outlet>
+...
+<ngm-modal-container></ngm-modal-container>
+```
+
 Import `ModalService` to display ModalComponents.
 
 ```
