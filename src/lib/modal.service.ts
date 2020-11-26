@@ -26,12 +26,7 @@ export class ModalService {
    * @param options Configuration options for the Modal instance
    */
 
-  display(component: any, options: ModalOptions = {
-    data: {},
-    dismissibleMask: true,
-    canClose: true,
-    styles: {}
-  }): void {
+  display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
       this.lockBody();
       const ref = this.componentResolverService.resolveComponent(this.applicationRef, ModalComponent, {

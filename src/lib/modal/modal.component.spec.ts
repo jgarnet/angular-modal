@@ -92,7 +92,7 @@ describe('ModalInstanceComponent', () => {
     component.options = {};
     fixture.detectChanges();
     component.populateOptions();
-    expect(component.zIndex).toBe(999);
+    expect(component.zIndex).toBe(0);
     expect(component.customStyles).toEqual({});
   });
   it('should use the provided options if supplied', () => {

@@ -31,7 +31,7 @@ export class ModalComponent implements OnInit {
 
   populateOptions(): void {
     this.customStyles = this.getDefaultOption('styles', {});
-    this.zIndex = this.getDefaultOption('zIndex', 999);
+    this.zIndex = this.getDefaultOption('zIndex', 0);
     this.dismissibleMask = this.getDefaultOption('dismissibleMask', true);
     this.canClose = this.getDefaultOption('canClose', true);
   }
