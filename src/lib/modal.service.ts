@@ -53,7 +53,7 @@ export class ModalService {
 
   close(component: any): void {
     const index = this.activeComponents.findIndex(i => i.component === component);
-    this.activeComponents[index].ref.destroy();
+    this.activeComponents[index].ref.instance.close();
     this.activeComponents.splice(index, 1);
     this.unlockBodyIfNeeded();
   }
@@ -63,7 +63,7 @@ export class ModalService {
    */
 
   closeAll(): void {
-    this.activeComponents.forEach(i => i.ref.destroy());
+    this.activeComponents.forEach(i => i.ref.instance.close());
     this.activeComponents = [];
     this.unlockBody();
   }

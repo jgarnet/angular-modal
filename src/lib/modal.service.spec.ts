@@ -7,13 +7,20 @@ import {ComponentResolverService} from './component-resolver.service';
 import {MockComponentRef} from './mock/mock-component-ref';
 import {RendererFactory2} from '@angular/core';
 import {MockRendererFactory2} from './mock/mock-renderer-factory2';
-import {MockRenderer2} from "./mock/mock-renderer2";
-import { DOCUMENT } from '@angular/common';
+import {MockRenderer2} from './mock/mock-renderer2';
+import {DOCUMENT} from '@angular/common';
 
 describe('AngularModalService', () => {
   let service: ModalService;
   const mockComponentResolver = new MockComponentResolver(null, null);
   const mockDocument = { body: {} };
+  const modalMockComponentRef = () => {
+    const ref = new MockComponentRef();
+    ref.setInstanceRef({
+      close: () => {}
+    });
+    return ref;
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,23 +49,25 @@ describe('AngularModalService', () => {
     service.display({});
     expect(mockComponentResolver.resolveComponent).toHaveBeenCalled();
   });
-  it('should destroy a ComponentRef on close()', () => {
-    mockComponentResolver.setComponentRef(new MockComponentRef());
-    spyOn(MockComponentRef.prototype, 'destroy');
+  it('should call ModalComponent.close() on close()', () => {
+    const mockComponentRef = modalMockComponentRef();
+    mockComponentResolver.setComponentRef(mockComponentRef);
+    spyOn(mockComponentRef.instance, 'close');
     service.display('1');
     service.close('1');
-    expect(MockComponentRef.prototype.destroy).toHaveBeenCalled();
+    expect(mockComponentRef.instance.close).toHaveBeenCalled();
   });
-  it('should class all ComponentRef instances on closeAll()', () => {
-    mockComponentResolver.setComponentRef(new MockComponentRef());
-    spyOn(MockComponentRef.prototype, 'destroy');
+  it('should close all ComponentRef instances on closeAll()', () => {
+    const mockComponentRef = modalMockComponentRef();
+    mockComponentResolver.setComponentRef(mockComponentRef);
+    spyOn(mockComponentRef.instance, 'close');
     service.display('1');
     service.display('2');
     service.closeAll();
-    expect(MockComponentRef.prototype.destroy).toHaveBeenCalledTimes(2);
+    expect(mockComponentRef.instance.close).toHaveBeenCalledTimes(2);
   });
   it('should return the proper isActive() status', () => {
-    mockComponentResolver.setComponentRef(new MockComponentRef());
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
     service.display('1');
     expect(service.isActive('1')).toBeTrue();
     service.close('1');
@@ -77,7 +86,7 @@ describe('AngularModalService', () => {
     expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
   });
   it('should only unlock the body when the last modal is closed', () => {
-    mockComponentResolver.setComponentRef(new MockComponentRef());
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
     spyOn(MockRenderer2.prototype, 'setStyle');
     service.display('1');
     service.display('2');

@@ -70,6 +70,14 @@ describe('ModalInstanceComponent', () => {
     component.dismissMask(modalContainerClickEvent);
     expect(component.close).toHaveBeenCalled();
   });
+  it('should destroy ComponentRef on close()', fakeAsync(() => {
+    spyOn(MockComponentRef.prototype, 'destroy');
+    component.ref = new MockComponentRef();
+    fixture.detectChanges();
+    component.close();
+    tick(200);
+    expect(MockComponentRef.prototype.destroy).toHaveBeenCalled();
+  }));
   it('should allow the Modal to be closed according to ModalOptions', () => {
     component.options.canClose = false;
     fixture.detectChanges();
