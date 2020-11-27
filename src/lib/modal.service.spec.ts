@@ -127,13 +127,24 @@ describe('AngularModalService', () => {
       zIndex: 999,
       dismissibleMask: false
     };
+    const expectedOptions = {
+      zIndex: 999,
+      dismissibleMask: false,
+      styles: {
+        backgroundColor: '#eee'
+      }
+    };
     service.setDefaultOptions(options);
     service.setViewContainerRef(mockViewContainerRef);
     spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
-    service.display(ModalComponent);
+    service.display(ModalComponent, {
+      styles: {
+        backgroundColor: '#eee'
+      }
+    });
     expect(mockComponentResolver.resolveComponent).toHaveBeenCalledWith(mockViewContainerRef, ModalComponent, {
       component: ModalComponent,
-      options
+      options: expectedOptions
     });
   });
 });

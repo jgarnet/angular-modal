@@ -50,7 +50,7 @@ Property | Type | Description | Default
 ---------|------|------------ | -------
 canClose | boolean | Determines whether the user can close the Modal | true
 data | any | Data which will populate the Component's @Input() fields | {}
-dismissableMask | boolean | Determines whether clicking the Modal container mask will close the Modal | true
+dismissibleMask | boolean | Determines whether clicking the Modal container mask will close the Modal | true
 styles | {} | Allows custom styling to be assigned to the Modal instance | {}
 zIndex | number | The zIndex for the given Modal instance | 0
 

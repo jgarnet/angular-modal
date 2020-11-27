@@ -45,12 +45,17 @@ export class ModalService {
    * @param options Configuration options for the Modal instance
    */
 
-  display(component: any, options?: ModalOptions): void {
+  display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
       this.lockBody();
+      for (const key of Object.keys(this.defaultOptions)) {
+        if (!!!options[key]) {
+          options[key] = this.defaultOptions[key];
+        }
+      }
       const ref = this.componentResolverService.resolveComponent(this.getHostView(), ModalComponent, {
         component,
-        options: options || this.defaultOptions
+        options
       });
       this.activeComponents.push({ref, component});
       ref.onDestroy(() => {
