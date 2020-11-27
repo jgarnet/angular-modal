@@ -12,6 +12,7 @@ export class ModalService {
   private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
   private renderer: Renderer2;
   private viewContainerRef: ViewContainerRef;
+  private defaultOptions: ModalOptions;
 
   constructor(private componentResolverService: ComponentResolverService,
               rendererFactory: RendererFactory2,
@@ -19,6 +20,7 @@ export class ModalService {
               private applicationRef: ApplicationRef) {
     this.activeComponents = [];
     this.renderer = rendererFactory.createRenderer(null, null);
+    this.defaultOptions = {};
   }
 
   /**
@@ -30,12 +32,20 @@ export class ModalService {
   }
 
   /**
+   * Sets global default options for each new Modal instance
+   */
+
+  setDefaultOptions(options: ModalOptions): void {
+    this.defaultOptions = options;
+  }
+
+  /**
    * Display a Modal instance
    * @param component The Component to be displayed
    * @param options Configuration options for the Modal instance
    */
 
-  display(component: any, options: ModalOptions = {}): void {
+  display(component: any, options: ModalOptions = this.defaultOptions): void {
     if (!this.isActive(component)) {
       this.lockBody();
       const ref = this.componentResolverService.resolveComponent(this.getHostView(), ModalComponent, {

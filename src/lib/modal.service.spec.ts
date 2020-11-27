@@ -120,4 +120,20 @@ describe('AngularModalService', () => {
       options: {}
     });
   });
+  it('should use default ModalOptions when no local options are supplied', () => {
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
+    const mockViewContainerRef = new MockViewContainerRef();
+    const options = {
+      zIndex: 999,
+      dismissibleMask: false
+    };
+    service.setDefaultOptions(options);
+    service.setViewContainerRef(mockViewContainerRef);
+    spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
+    service.display(ModalComponent);
+    expect(mockComponentResolver.resolveComponent).toHaveBeenCalledWith(mockViewContainerRef, ModalComponent, {
+      component: ModalComponent,
+      options
+    });
+  });
 });

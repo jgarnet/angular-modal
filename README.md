@@ -54,6 +54,8 @@ dismissableMask | boolean | Determines whether clicking the Modal container mask
 styles | {} | Allows custom styling to be assigned to the Modal instance | {}
 zIndex | number | The zIndex for the given Modal instance | 0
 
+`ModalService.setDefaultOptions()` can be used to define the default `ModalOptions` for all Modal instances.
+
 ### Example:
 
 `TestComponent`:
