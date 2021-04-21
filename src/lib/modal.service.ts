@@ -49,7 +49,6 @@ export class ModalService {
 
   display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
-      this.setScrollPositionIfNeeded();
       this.lockBody();
       for (const key of Object.keys(this.defaultOptions)) {
         if (!!!options[key]) {
@@ -69,7 +68,7 @@ export class ModalService {
   }
 
   private setScrollPositionIfNeeded(): void {
-    if (!!!this.scrollPosition) {
+    if (isNaN(this.scrollPosition)) {
       this.scrollPosition = this.document.body.scrollTop || this.document.documentElement.scrollTop;
     }
   }
@@ -113,7 +112,9 @@ export class ModalService {
    */
 
   private lockBody(): void {
+    this.setScrollPositionIfNeeded();
     this.renderer.setStyle(this.document.body, 'position', 'fixed');
+    this.renderer.setStyle(this.document.body, 'top', `-${this.scrollPosition}px`);
   }
 
   /**
@@ -121,8 +122,11 @@ export class ModalService {
    */
 
   private unlockBody(): void {
-    this.renderer.setStyle(this.document.body, 'position', 'relative');
-    this.window.scrollTo(0, this.scrollPosition);
+    const scrollY = this.document.body.style.top;
+    this.renderer.setStyle(this.document.body, 'position', '');
+    this.renderer.setStyle(this.document.body, 'top', '0');
+    // tslint:disable-next-line:radix
+    this.window.scrollTo(0, parseInt(scrollY || '0') * -1);
     this.scrollPosition = null;
   }
 

@@ -17,6 +17,9 @@ describe('AngularModalService', () => {
   const mockComponentResolver = new MockComponentResolver(null, null);
   const mockDocument = {
     body: {
+      style: {
+        top: 100
+      },
       scrollTop: 100
     },
     documentElement: {
@@ -95,7 +98,7 @@ describe('AngularModalService', () => {
   it('should unlock the body when all modals are closed', () => {
     spyOn(MockRenderer2.prototype, 'setStyle');
     service.closeAll();
-    expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
+    expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', '');
   });
   it('should only unlock the body when the last modal is closed', () => {
     mockComponentResolver.setComponentRef(modalMockComponentRef());
@@ -103,9 +106,9 @@ describe('AngularModalService', () => {
     service.display('1');
     service.display('2');
     service.close('1');
-    expect(MockRenderer2.prototype.setStyle).not.toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
+    expect(MockRenderer2.prototype.setStyle).not.toHaveBeenCalledWith(mockDocument.body, 'position', '');
     service.close('2');
-    expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', 'relative');
+    expect(MockRenderer2.prototype.setStyle).toHaveBeenCalledWith(mockDocument.body, 'position', '');
   });
   it('should use ApplicationRef when ViewContainerRef is missing', () => {
     const applicationRef = TestBed.inject(ApplicationRef);
@@ -165,11 +168,11 @@ describe('AngularModalService', () => {
     spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
     service.display(ModalComponent);
     service.closeAll();
-    expect(window.scrollTo).toHaveBeenCalledWith(0, scrollPosition);
+    expect(window.scrollTo).toHaveBeenCalledWith(0, -mockDocument.body.style.top);
     document.body.scrollTop = null;
     document.documentElement.scrollTop = scrollPosition;
     service.display(ModalComponent);
     service.closeAll();
-    expect(window.scrollTo).toHaveBeenCalledWith(0, scrollPosition);
+    expect(window.scrollTo).toHaveBeenCalledWith(0, -mockDocument.body.style.top);
   });
 });
