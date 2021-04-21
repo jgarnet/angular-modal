@@ -5,7 +5,7 @@ import {ComponentResolver} from './component-resolver';
 import {MockComponentResolver} from './mock/mock-component-resolver';
 import {ComponentResolverService} from './component-resolver.service';
 import {MockComponentRef} from './mock/mock-component-ref';
-import {ApplicationRef, RendererFactory2} from '@angular/core';
+import {ApplicationRef, Renderer2, RendererFactory2} from '@angular/core';
 import {MockRendererFactory2} from './mock/mock-renderer-factory2';
 import {MockRenderer2} from './mock/mock-renderer2';
 import {DOCUMENT} from '@angular/common';
@@ -15,7 +15,14 @@ import {MockViewContainerRef} from './mock/mock-view-container-ref';
 describe('AngularModalService', () => {
   let service: ModalService;
   const mockComponentResolver = new MockComponentResolver(null, null);
-  const mockDocument = { body: {} };
+  const mockDocument = {
+    body: {
+      scrollTop: 100
+    },
+    documentElement: {
+      scrollTop: 100
+    }
+  };
   const modalMockComponentRef = () => {
     const ref = new MockComponentRef();
     ref.setInstanceRef({
@@ -28,9 +35,11 @@ describe('AngularModalService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: RendererFactory2, useClass: MockRendererFactory2 },
+        { provide: Renderer2, useClass: MockRenderer2 },
         { provide: ComponentResolverService, useValue: mockComponentResolver },
         { provide: DOCUMENT, useValue: mockDocument },
-        { provide: ApplicationRef, useValue: {} }
+        { provide: ApplicationRef, useValue: {} },
+        { provide: 'WINDOW', useValue: window }
       ]
     });
     service = TestBed.inject(ModalService);
@@ -146,5 +155,21 @@ describe('AngularModalService', () => {
       component: ModalComponent,
       options: expectedOptions
     });
+  });
+  it('should reset the body scroll position when the last Modal is closed', () => {
+    const scrollPosition = 500;
+    const document = TestBed.inject(DOCUMENT);
+    document.body.scrollTop = scrollPosition;
+    mockComponentResolver.setComponentRef(modalMockComponentRef());
+    spyOn(window, 'scrollTo');
+    spyOn(mockComponentResolver, 'resolveComponent').and.callThrough();
+    service.display(ModalComponent);
+    service.closeAll();
+    expect(window.scrollTo).toHaveBeenCalledWith(0, scrollPosition);
+    document.body.scrollTop = null;
+    document.documentElement.scrollTop = scrollPosition;
+    service.display(ModalComponent);
+    service.closeAll();
+    expect(window.scrollTo).toHaveBeenCalledWith(0, scrollPosition);
   });
 });

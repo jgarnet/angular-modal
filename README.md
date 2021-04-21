@@ -22,14 +22,6 @@ Import `AngularModalModule` into your application:
 })
 ```
 
-Add `ModalContainerComponent` to your application:
-
-```
-<router-outlet></router-outlet>
-...
-<ngm-modal-container></ngm-modal-container>
-```
-
 Import `ModalService` to display ModalComponents.
 
 ```
@@ -55,6 +47,17 @@ styles | {} | Allows custom styling to be assigned to the Modal instance | {}
 zIndex | number | The zIndex for the given Modal instance | 0
 
 `ModalService.setDefaultOptions()` can be used to define the default `ModalOptions` for all Modal instances.
+
+### ModalService:
+
+Function | Parameters | Description
+-------- | ---------- | -----------
+display | component: any, options: ModalOptions | Displays the provided Component, using the provided ModalOptions (if present). Any properties that are not present in `options` will utilize the defaults provided in `ModalService`
+close | component: any | Closes the provided Component instance
+closeAll | - | Closes all open Modal instances
+isActive | component: any | Determines if the provided Component is currently open in a Modal instance
+setDefaultOptions | options: ModalOptions | Sets the default `ModalOptions` that will be used for each new Modal instance
+setViewContainerRef | viewContainerRef: ViewContainerRef | Sets the `ViewContainerRef` that new Modal instances will be injected into (by default, `ModalService` will utilize `ApplicationRef` and inject all Modal instances into the `<body>` element)
 
 ### Example:
 

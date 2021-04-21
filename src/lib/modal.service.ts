@@ -13,10 +13,12 @@ export class ModalService {
   private renderer: Renderer2;
   private viewContainerRef: ViewContainerRef;
   private defaultOptions: ModalOptions;
+  private scrollPosition: number;
 
   constructor(private componentResolverService: ComponentResolverService,
               rendererFactory: RendererFactory2,
               @Inject(DOCUMENT) private document,
+              @Inject('WINDOW') private window,
               private applicationRef: ApplicationRef) {
     this.activeComponents = [];
     this.renderer = rendererFactory.createRenderer(null, null);
@@ -48,6 +50,7 @@ export class ModalService {
   display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
       this.lockBody();
+      this.setScrollPositionIfNeeded();
       for (const key of Object.keys(this.defaultOptions)) {
         if (!!!options[key]) {
           options[key] = this.defaultOptions[key];
@@ -62,6 +65,12 @@ export class ModalService {
         this.activeComponents.splice(this.activeComponents.indexOf(component), 1);
         this.unlockBodyIfNeeded();
       });
+    }
+  }
+
+  private setScrollPositionIfNeeded(): void {
+    if (!!!this.scrollPosition) {
+      this.scrollPosition = this.document.body.scrollTop || this.document.documentElement.scrollTop;
     }
   }
 
@@ -113,6 +122,8 @@ export class ModalService {
 
   private unlockBody(): void {
     this.renderer.setStyle(this.document.body, 'position', 'relative');
+    this.window.scrollTo(0, this.scrollPosition);
+    this.scrollPosition = null;
   }
 
   private unlockBodyIfNeeded(): void {
