@@ -49,8 +49,8 @@ export class ModalService {
 
   display(component: any, options: ModalOptions = {}): void {
     if (!this.isActive(component)) {
-      this.lockBody();
       this.setScrollPositionIfNeeded();
+      this.lockBody();
       for (const key of Object.keys(this.defaultOptions)) {
         if (!!!options[key]) {
           options[key] = this.defaultOptions[key];
