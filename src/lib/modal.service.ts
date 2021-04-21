@@ -68,7 +68,7 @@ export class ModalService {
   }
 
   private setScrollPositionIfNeeded(): void {
-    if (isNaN(this.scrollPosition)) {
+    if (!!!this.scrollPosition && this.scrollPosition !== 0) {
       this.scrollPosition = this.document.body.scrollTop || this.document.documentElement.scrollTop;
     }
   }
