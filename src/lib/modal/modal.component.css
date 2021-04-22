@@ -7,10 +7,6 @@ div.ngm-modal-container {
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.5);
-  transition: .2s linear;
-  -webkit-transition: .2s linear;
-  -moz-transition: .2s linear;
-  -o-transition: .2s linear;
 }
 div.ngm-modal-close {
   clear: both;
@@ -31,49 +27,19 @@ div.ngm-modal-close .modal-close-button:hover {
   opacity: 0.5;
 }
 div.ngm-modal {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: calc(100% - 2em);
+  max-height: calc(100% - 2em);
   margin: 0 auto;
   background: #fff;
   border-radius: 2px;
   padding: 1em;
   display: flex;
   flex-direction: column;
-  animation: zoomIn .2s ease-in-out;
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
   -moz-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
   -o-box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.2), 0 10px 15px 0 rgba(0, 0, 0, 0.19);
-  transition: max-width .2s linear;
-  -webkit-transition: .2s linear;
-  -moz-transition: .2s linear;
-  -o-transition: .2s linear;
 }
 div.ngm-modal-content {
   overflow-y: auto;
-}
-
-.fade-animation {
-  animation: fadeIn .2s ease-in-out;
-}
-
-.close-animation {
-  animation: closeModal .2s ease-in-out !important;
-  opacity: 0;
-  transform: scale(0);
-}
-
-@keyframes fadeIn {
-  from {opacity: 0}
-  to {opacity: 1}
-}
-
-@keyframes zoomIn {
-  from { transform: scale(0.4); }
-  to { transform: scale(1); }
-}
-
-@keyframes closeModal {
-  from { transform: scale(1); opacity: 1 }
-  to { transform: scale(0); opacity: 0 }
 }

@@ -1,12 +1,13 @@
 import {Component, ComponentRef, ElementRef, Input, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {ModalOptions} from '../modal-options';
 import {ComponentResolverService} from '../component-resolver.service';
-import {timer} from 'rxjs';
+import {FadeGrow} from '../animations/animation-fadeGrow';
 
 @Component({
   selector: 'ngm-modal-instance',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  styleUrls: ['./modal.component.css'],
+  animations: [FadeGrow.container, FadeGrow.modal]
 })
 export class ModalComponent implements OnInit {
   @Input() component: Component;
@@ -44,8 +45,7 @@ export class ModalComponent implements OnInit {
   }
 
   close(): void {
-    this.modal.nativeElement.classList.add('close-animation');
-    timer(200).subscribe(() => this.ref.destroy());
+    this.ref.destroy();
   }
 
   private getDefaultOption<T>(key: string, value: any): any {

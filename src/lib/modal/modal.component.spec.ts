@@ -5,6 +5,7 @@ import {MockComponentRef} from '../mock/mock-component-ref';
 import {ComponentResolverService} from '../component-resolver.service';
 import {MockComponentResolver} from '../mock/mock-component-resolver';
 import {ModalOptions} from '../modal-options';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ModalInstanceComponent', () => {
   let component: ModalComponent;
@@ -21,6 +22,9 @@ describe('ModalInstanceComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ModalComponent ],
+      imports: [
+        BrowserAnimationsModule
+      ],
       providers: [
         { provide: ComponentResolverService, useValue: mockComponentResolver }
       ]
@@ -70,14 +74,13 @@ describe('ModalInstanceComponent', () => {
     component.dismissMask(modalContainerClickEvent);
     expect(component.close).toHaveBeenCalled();
   });
-  it('should destroy ComponentRef on close()', fakeAsync(() => {
+  it('should destroy ComponentRef on close()', () => {
     spyOn(MockComponentRef.prototype, 'destroy');
     component.ref = new MockComponentRef();
     fixture.detectChanges();
     component.close();
-    tick(200);
     expect(MockComponentRef.prototype.destroy).toHaveBeenCalled();
-  }));
+  });
   it('should allow the Modal to be closed according to ModalOptions', () => {
     component.options.canClose = false;
     fixture.detectChanges();
