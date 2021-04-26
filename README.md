@@ -16,7 +16,7 @@ Import `AngularModalModule` into your application:
 @NgModule({
     ...
     imports: [
-        AngularModalModule
+        AngularModalModule.forRoot()
     ]
     ...
 })

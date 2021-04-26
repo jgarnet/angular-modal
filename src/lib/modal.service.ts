@@ -4,9 +4,7 @@ import {ModalOptions} from './modal-options';
 import {ComponentResolverService} from './component-resolver.service';
 import {DOCUMENT} from '@angular/common';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ModalService {
 
   private activeComponents: {ref: ComponentRef<ModalComponent>, component: Component}[];
