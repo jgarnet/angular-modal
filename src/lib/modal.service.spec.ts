@@ -37,6 +37,7 @@ describe('AngularModalService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        ModalService,
         { provide: RendererFactory2, useClass: MockRendererFactory2 },
         { provide: Renderer2, useClass: MockRenderer2 },
         { provide: ComponentResolverService, useValue: mockComponentResolver },

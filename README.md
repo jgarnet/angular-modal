@@ -8,6 +8,10 @@ Provides a simple, minimal configuration modal implementation.
 npm install angular-modal-simple
 ```
 
+## Version Support
+
+Angular 10.1+
+
 ## Use
 
 Import `AngularModalModule` into your application:
